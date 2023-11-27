@@ -1,0 +1,14 @@
+services:
+  ss:
+    image: niis/xroad-security-server-standalone:latest
+    hostname: ss
+    ports:
+      - 4000:4000
+      - 8080:8080
+
+  test-service:
+    build:
+      context: ..
+      dockerfile: ./Dockerfile
+    ports:
+      - 8070:8080
