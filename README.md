@@ -40,7 +40,8 @@ For detailed example of standalone security server configuration, refer to
 
 After the config you can call the rest-test-service through the security server:
 ```shell
-curl -X GET \
--H 'X-Road-Client: CS/ORG/1111/TestClient' \
--i 'http://localhost:8080/r1/CS/ORG/1111/TestService/rest-test/random'
+curl 
+  -X GET \
+  -H 'X-Road-Client: CS/ORG/1111/TestClient' \
+  -i 'http://localhost:8080/r1/CS/ORG/1111/TestService/rest-test/random'
 ```
