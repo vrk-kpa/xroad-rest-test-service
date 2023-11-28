@@ -17,3 +17,27 @@ cd local-dev
 docker-compose build
 docker-compose up
 ```
+
+Now you can test calling the service directly, without the security server:
+```shell
+curl -X GET localhost:8070/random
+```
+
+Login to the security server UI by opening http://localhost:4000 in your browser. 
+The username is `xrd` and the password is `secret`.
+
+Standalone security server has one X-Road service and one client, 
+named `CS:1111:TestService` and `CS:1111:TestClient` respectively.
+Add the rest-test-service to the service list of `CS:1111:TestService`.
+Service URL in docker network is `http://test-service:8080`
+
+Add a permission for `CS:1111:TestClient` to call `CS:1111:TestService` service.
+For detailed example of standalone security server configuration, refer to 
+[the tutorial](https://github.com/digitaliceland/Straumurinn/blob/master/DOC/Manuals/standalone_security_server_tutorial.md).
+
+After the config you can call the rest-test-service through the security server:
+```shell
+curl -X GET \
+-H 'X-Road-Client: CS/ORG/1111/TestClient' \
+-i 'http://localhost:8080/r1/CS/ORG/1111/TestService/rest-test-service/random'
+```
