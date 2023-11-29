@@ -1,6 +1,5 @@
 package fi.dvv.xroad.resttestservice.error;
 
-import fi.dvv.xroad.resttestservice.error.ValidationException;
 import fi.dvv.xroad.resttestservice.model.ErrorDto;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -10,12 +9,10 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 
-// a global spring boot error handler that returns ErrorDto with the error message and HTTP status code.
-// the error handler is used by the controller methods when they throw exceptions
+// a global error handler that returns ErrorDto with the error message and HTTP status code.
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -35,7 +32,5 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         ErrorDto error = new ErrorDto(ex.getMessage(), statusCode.value());
         return super.handleExceptionInternal(ex, error, headers, statusCode, request);
     }
-
-
 }
 
