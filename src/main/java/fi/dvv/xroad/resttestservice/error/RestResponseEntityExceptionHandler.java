@@ -1,4 +1,4 @@
-package fi.dvv.xroad.resttestservice.contoller;
+package fi.dvv.xroad.resttestservice.error;
 
 import fi.dvv.xroad.resttestservice.error.ValidationException;
 import fi.dvv.xroad.resttestservice.model.ErrorDto;
