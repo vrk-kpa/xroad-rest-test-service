@@ -1,5 +1,6 @@
 package fi.dvv.xroad.resttestservice.contoller;
 
+import fi.dvv.xroad.resttestservice.error.ValidationException;
 import fi.dvv.xroad.resttestservice.model.ErrorDto;
 import fi.dvv.xroad.resttestservice.model.GreetingDto;
 import fi.dvv.xroad.resttestservice.model.RandomNumberDto;
@@ -38,19 +39,11 @@ public class TestServiceRestController {
         return new GreetingDto("Hello" + nameOut + "! Greetings from adapter server!");
     }
 
-    @ExceptionHandler(value = IllegalArgumentException.class)
-    public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException exception) {
-        return new ResponseEntity<>(
-                new ErrorDto(exception.getMessage(), HttpStatus.BAD_REQUEST.value()),
-                HttpStatus.BAD_REQUEST
-        );
-    }
-
     private Boolean stringIsEmpty(String s) {
         return s == null || s.trim().isEmpty();
     }
     private void validateName(String name) {
         if (name.length() > 256)
-            throw new IllegalArgumentException("Name is too long. Max length is 256 characters.");
+            throw new ValidationException("Name is too long. Max length is 256 characters.");
     }
 }
