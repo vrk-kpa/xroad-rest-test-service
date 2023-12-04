@@ -1,7 +1,6 @@
-# Base openjdk:17
-FROM openjdk:17
+FROM amazoncorretto:17-alpine
 
-# Add X-Road Test Service war to container
+# Add the test service jar to container
 ADD target/rest-test-service-*.jar test-service.jar
 
 # Entry with exec
