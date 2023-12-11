@@ -38,37 +38,37 @@ class ApiTest {
     }
 
     @Test
-    void greetingReturnsGreetingMessage() throws Exception {
-        assertThat(this.restTemplate.getForObject(baseUrl() + "/greeting", GreetingDto.class).greeting()).isEqualTo("Hello! Greetings from adapter server!");
+    void helloReturnsGreetingMessage() throws Exception {
+        assertThat(this.restTemplate.getForObject(baseUrl() + "/hello", GreetingDto.class).greeting()).isEqualTo("Hello! Greetings from adapter server!");
     }
 
     @Test
-    void greetingReturnsGreetingMessageWithName() throws Exception {
-        assertThat(this.restTemplate.getForObject(new URI(baseUrl() + "/greeting?name=Gandalf"), GreetingDto.class).greeting()).isEqualTo("Hello Gandalf! Greetings from adapter server!");
+    void helloReturnsGreetingMessageWithName() throws Exception {
+        assertThat(this.restTemplate.getForObject(new URI(baseUrl() + "/hello?name=Gandalf"), GreetingDto.class).greeting()).isEqualTo("Hello Gandalf! Greetings from adapter server!");
     }
 
     @Test
-    void greetingReturnsGreetingMessageWithComplexName() throws Exception {
-        assertThat(this.restTemplate.getForObject(new URI(baseUrl() + "/greeting?name=X%20%C3%86%20A-12"), GreetingDto.class).greeting()).isEqualTo("Hello X Æ A-12! Greetings from adapter server!");
+    void helloReturnsGreetingMessageWithComplexName() throws Exception {
+        assertThat(this.restTemplate.getForObject(new URI(baseUrl() + "/hello?name=X%20%C3%86%20A-12"), GreetingDto.class).greeting()).isEqualTo("Hello X Æ A-12! Greetings from adapter server!");
     }
 
     @Test
-    void greetingReturnsGreetingMessageWithNameEscapedForJson() throws Exception {
-        assertThat(this.restTemplate.getForObject(baseUrl() + "/greeting?name=<script>alert('Executed!');</script>", GreetingDto.class).greeting()).isEqualTo("Hello <script>alert('Executed!');<\\/script>! Greetings from adapter server!");
+    void helloReturnsGreetingMessageWithNameEscapedForJson() throws Exception {
+        assertThat(this.restTemplate.getForObject(baseUrl() + "/hello?name=<script>alert('Executed!');</script>", GreetingDto.class).greeting()).isEqualTo("Hello <script>alert('Executed!');<\\/script>! Greetings from adapter server!");
     }
 
     @Test
-    void greetingReturnsErrorForTooLongName() throws Exception {
+    void helloReturnsErrorForTooLongName() throws Exception {
         String name = "a".repeat(257);
-        ErrorDto error = this.restTemplate.getForObject(baseUrl() + "/greeting?name=" + name, ErrorDto.class);
+        ErrorDto error = this.restTemplate.getForObject(baseUrl() + "/hello?name=" + name, ErrorDto.class);
         assertThat(error.errorMessage()).isEqualTo("Name is too long. Max length is 256 characters.");
         assertThat(error.httpStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
     void nonExistentEndpointReturnsError() throws Exception {
-        ErrorDto error = this.restTemplate.getForObject(baseUrl() + "/i-dont-exist", ErrorDto.class);
-        assertThat(error.errorMessage()).isEqualTo("No endpoint GET /rest-api/i-dont-exist.");
+        ErrorDto error = this.restTemplate.getForObject(baseUrl() + "/not-here", ErrorDto.class);
+        assertThat(error.errorMessage()).isEqualTo("No endpoint GET /rest-api/not-here.");
         assertThat(error.httpStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 

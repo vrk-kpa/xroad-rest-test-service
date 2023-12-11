@@ -25,9 +25,9 @@ public class TestServiceRestController {
         return new RandomNumberDto(randomGenerator.nextInt(maxRandom));
     }
 
-    @GetMapping("/greeting")
+    @GetMapping("/hello")
     public GreetingDto getGreeting(@RequestParam(value = "name", defaultValue = "") String name) {
-        System.out.println("called /greeting");
+        System.out.println("called /hello");
 
         String nameOut = "";
 
