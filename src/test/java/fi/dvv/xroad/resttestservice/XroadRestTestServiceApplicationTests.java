@@ -1,7 +1,7 @@
 package fi.dvv.xroad.resttestservice;
 
 import fi.dvv.xroad.resttestservice.model.ErrorDto;
-import fi.dvv.xroad.resttestservice.model.GreetingDto;
+import fi.dvv.xroad.resttestservice.model.MessageDto;
 import fi.dvv.xroad.resttestservice.model.RandomNumberDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 
 import java.net.URI;
@@ -34,27 +33,27 @@ class ApiTest {
     
     @Test
     void randomReturnsRandomNumber() throws Exception {
-        assertThat(this.restTemplate.getForObject(baseUrl() + "/random", RandomNumberDto.class).randomNumber()).isGreaterThanOrEqualTo(1).isLessThanOrEqualTo(100);
+        assertThat(this.restTemplate.getForObject(baseUrl() + "/random", RandomNumberDto.class).data()).isGreaterThanOrEqualTo(1).isLessThanOrEqualTo(100);
     }
 
     @Test
     void helloReturnsGreetingMessage() throws Exception {
-        assertThat(this.restTemplate.getForObject(baseUrl() + "/hello", GreetingDto.class).greeting()).isEqualTo("Hello! Greetings from adapter server!");
+        assertThat(this.restTemplate.getForObject(baseUrl() + "/hello", MessageDto.class).message()).isEqualTo("Hello! Greetings from adapter server!");
     }
 
     @Test
     void helloReturnsGreetingMessageWithName() throws Exception {
-        assertThat(this.restTemplate.getForObject(new URI(baseUrl() + "/hello?name=Gandalf"), GreetingDto.class).greeting()).isEqualTo("Hello Gandalf! Greetings from adapter server!");
+        assertThat(this.restTemplate.getForObject(new URI(baseUrl() + "/hello?name=Gandalf"), MessageDto.class).message()).isEqualTo("Hello Gandalf! Greetings from adapter server!");
     }
 
     @Test
     void helloReturnsGreetingMessageWithComplexName() throws Exception {
-        assertThat(this.restTemplate.getForObject(new URI(baseUrl() + "/hello?name=X%20%C3%86%20A-12"), GreetingDto.class).greeting()).isEqualTo("Hello X Æ A-12! Greetings from adapter server!");
+        assertThat(this.restTemplate.getForObject(new URI(baseUrl() + "/hello?name=X%20%C3%86%20A-12"), MessageDto.class).message()).isEqualTo("Hello X Æ A-12! Greetings from adapter server!");
     }
 
     @Test
     void helloReturnsGreetingMessageWithNameEscapedForJson() throws Exception {
-        assertThat(this.restTemplate.getForObject(baseUrl() + "/hello?name=<script>alert('Executed!');</script>", GreetingDto.class).greeting()).isEqualTo("Hello <script>alert('Executed!');<\\/script>! Greetings from adapter server!");
+        assertThat(this.restTemplate.getForObject(baseUrl() + "/hello?name=<script>alert('Executed!');</script>", MessageDto.class).message()).isEqualTo("Hello <script>alert('Executed!');<\\/script>! Greetings from adapter server!");
     }
 
     @Test
